@@ -1,0 +1,145 @@
+.wizard-progress {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.wizard-progress::before {
+  content: '';
+  position: absolute;
+  top: 15px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #e0e0e0;
+  z-index: 0;
+}
+
+.wizard-progress-item {
+  flex: 1;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.wizard-progress-circle {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #e0e0e0;
+  color: #999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 8px;
+  font-weight: bold;
+  font-size: 0.85em;
+}
+
+.wizard-progress-item.active .wizard-progress-circle {
+  background: #667eea;
+  color: white;
+}
+
+.wizard-progress-item.completed .wizard-progress-circle {
+  background: #4caf50;
+  color: white;
+}
+
+.wizard-progress-label {
+  font-size: 0.85em;
+  color: #666;
+}
+
+.wizard-progress-item.active .wizard-progress-label {
+  color: #667eea;
+  font-weight: 600;
+}
+
+.wizard-step {
+  display: none;
+}
+
+.wizard-step.active {
+  display: block;
+}
+
+.industry-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.industry-card {
+  padding: 20px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  background: white;
+}
+
+.industry-card:hover {
+  border-color: #667eea;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+}
+
+.industry-card.selected {
+  border-color: #667eea;
+  background: #f0f4ff;
+}
+
+.industry-card .icon {
+  font-size: 2.5em;
+  margin-bottom: 10px;
+}
+
+.industry-card .name {
+  font-weight: 600;
+  color: #333;
+}
+
+.subcategory-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.subcategory-item {
+  padding: 15px 20px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+  background: white;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.subcategory-item:hover {
+  border-color: #667eea;
+  background: #f8f9ff;
+}
+
+.subcategory-item.selected {
+  border-color: #667eea;
+  background: #f0f4ff;
+}
+
+.subcategory-item::before {
+  content: '○';
+  font-size: 1.5em;
+  color: #ccc;
+}
+
+.subcategory-item.selected::before {
+  content: '●';
+  color: #667eea;
+}
+

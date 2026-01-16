@@ -1,0 +1,88 @@
+.preset-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.preset-card {
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+}
+
+.preset-card:hover {
+  border-color: #667eea;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+  transform: translateY(-2px);
+}
+
+.preset-card.selected {
+  border-color: #667eea;
+  background: #f0f4ff;
+}
+
+.preset-card h3 {
+  color: #333;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.preset-card .subtitle {
+  color: #666;
+  font-size: 0.9em;
+  margin-bottom: 15px;
+}
+
+.preset-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.preset-tag {
+  padding: 4px 10px;
+  background: #e8f5e9;
+  color: #2e7d32;
+  border-radius: 12px;
+  font-size: 0.85em;
+}
+
+.llm-selector {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.llm-option {
+  padding: 20px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.llm-option:hover {
+  border-color: #667eea;
+  background: #f0f4ff;
+}
+
+.llm-option.selected {
+  border-color: #667eea;
+  background: #667eea;
+  color: white;
+}
+
+.llm-option .icon {
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+

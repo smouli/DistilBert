@@ -1,0 +1,39 @@
+.list-container {
+  margin-top: 20px;
+}
+
+.list-item {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.list-item-content {
+  flex: 1;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.list-item input {
+  flex: 1;
+  border: 1px solid #e0e0e0;
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+
+.list-item-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.icon-btn.delete:hover {
+  background: #ffebee;
+  color: #d32f2f;
+}
+

@@ -1,0 +1,59 @@
+.step-indicator {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 40px;
+  position: relative;
+}
+
+.step-indicator::before {
+  content: '';
+  position: absolute;
+  top: 20px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: #e0e0e0;
+  z-index: 0;
+}
+
+.step {
+  flex: 1;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.step-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #e0e0e0;
+  color: #999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 10px;
+  font-weight: bold;
+  transition: all 0.3s;
+}
+
+.step.active .step-circle {
+  background: #667eea;
+  color: white;
+}
+
+.step.completed .step-circle {
+  background: #4caf50;
+  color: white;
+}
+
+.step-label {
+  font-size: 0.9em;
+  color: #666;
+}
+
+.step.active .step-label {
+  color: #667eea;
+  font-weight: 600;
+}
+
