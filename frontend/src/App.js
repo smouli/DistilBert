@@ -43,12 +43,41 @@ function App() {
 
     try {
       const result = await api.analyzeProblem(problemStatement, selectedLLM);
+      console.log('Analysis result:', result);
+      
+      // Validate response structure
+      if (!result || !result.domain || !result.questions) {
+        console.error('Invalid response structure:', result);
+        alert('Invalid response from server. Please check console for details.');
+        return;
+      }
+      
+      // Ensure questions is an array
+      const questionsArray = Array.isArray(result.questions) 
+        ? result.questions 
+        : [];
+      
       setDomain(result.domain);
-      setQuestions(result.questions.map(q => ({ question: q, answer: '' })));
+      setQuestions(questionsArray.map(q => {
+        // Handle both string and object formats
+        if (typeof q === 'string') {
+          return { question: q, answer: '' };
+        } else if (q && typeof q === 'object') {
+          return { question: q.question || q.text || '', answer: q.answer || '' };
+        }
+        return { question: String(q), answer: '' };
+      }));
       setCurrentStep(2);
     } catch (error) {
       console.error('Analysis failed:', error);
-      alert('Failed to analyze problem. Please try again.');
+      console.error('Error details:', {
+        message: error.message,
+        response: error.response?.data,
+        status: error.response?.status,
+        config: error.config
+      });
+      const errorMsg = error.response?.data?.detail || error.message || 'Unknown error';
+      alert(`Failed to analyze problem: ${errorMsg}. Please check console for details.`);
     }
   };
 
@@ -221,4 +250,5 @@ function App() {
 }
 
 export default App;
+
 
