@@ -12,9 +12,17 @@ load_dotenv()
 app = FastAPI(title="DistilBERT Training Platform API")
 
 # CORS middleware
+frontend_url = os.getenv("FRONTEND_URL", "https://distilbert-frontend.onrender.com")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000", "http://127.0.0.1:3000", "http://localhost:4000", "http://127.0.0.1:4000"],
+    allow_origins=[
+        "http://localhost:3000", 
+        "http://127.0.0.1:3000", 
+        "http://localhost:4000", 
+        "http://127.0.0.1:4000",
+        frontend_url,
+        "https://distilbert-frontend.onrender.com"
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
