@@ -8,8 +8,20 @@ import anthropic
 
 class LLMService:
     def __init__(self):
-        self.openai_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY")) if os.getenv("OPENAI_API_KEY") else None
-        self.anthropic_client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY")) if os.getenv("ANTHROPIC_API_KEY") else None
+        try:
+            openai_key = os.getenv("OPENAI_API_KEY")
+            self.openai_client = OpenAI(api_key=openai_key) if openai_key else None
+        except Exception as e:
+            print(f"Warning: Failed to initialize OpenAI client: {e}")
+            self.openai_client = None
+        
+        try:
+            anthropic_key = os.getenv("ANTHROPIC_API_KEY")
+            self.anthropic_client = anthropic.Anthropic(api_key=anthropic_key) if anthropic_key else None
+        except Exception as e:
+            print(f"Warning: Failed to initialize Anthropic client: {e}")
+            self.anthropic_client = None
+        
         # self.qwen_client = Generation() if os.getenv("QWEN_API_KEY") else None  # Uncomment if using Qwen API
         self.qwen_client = None
 

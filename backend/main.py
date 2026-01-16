@@ -28,9 +28,18 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Initialize services
-llm_service = LLMService()
-training_service = TrainingService()
+# Initialize services with error handling
+try:
+    llm_service = LLMService()
+except Exception as e:
+    print(f"Warning: Failed to initialize LLMService: {e}")
+    llm_service = None
+
+try:
+    training_service = TrainingService()
+except Exception as e:
+    print(f"Warning: Failed to initialize TrainingService: {e}")
+    training_service = None
 
 
 class ProblemStatement(BaseModel):
@@ -88,6 +97,8 @@ async def root():
 @app.post("/api/analyze-problem")
 async def analyze_problem(request: ProblemStatement):
     """Analyze problem statement and generate domain + questions"""
+    if llm_service is None:
+        raise HTTPException(status_code=503, detail="LLM service not available")
     try:
         result = await llm_service.analyze_problem(
             request.problem, 
@@ -101,6 +112,8 @@ async def analyze_problem(request: ProblemStatement):
 @app.post("/api/generate-entities-intents")
 async def generate_entities_intents(request: AnalysisRequest):
     """Generate entities and intents based on problem analysis"""
+    if llm_service is None:
+        raise HTTPException(status_code=503, detail="LLM service not available")
     try:
         result = await llm_service.generate_entities_intents(
             request.problem,
@@ -116,6 +129,8 @@ async def generate_entities_intents(request: AnalysisRequest):
 @app.post("/api/start-training")
 async def start_training(request: TrainingRequest):
     """Start DistilBERT model training"""
+    if training_service is None:
+        raise HTTPException(status_code=503, detail="Training service not available")
     try:
         job_id = await training_service.start_training(
             entities=request.entities,
@@ -130,6 +145,8 @@ async def start_training(request: TrainingRequest):
 @app.get("/api/training-status/{job_id}")
 async def get_training_status(job_id: str):
     """Get training job status"""
+    if training_service is None:
+        raise HTTPException(status_code=503, detail="Training service not available")
     try:
         status = await training_service.get_training_status(job_id)
         return status
@@ -140,6 +157,8 @@ async def get_training_status(job_id: str):
 @app.post("/api/training-stop/{job_id}")
 async def stop_training(job_id: str):
     """Stop a running training job"""
+    if training_service is None:
+        raise HTTPException(status_code=503, detail="Training service not available")
     try:
         result = await training_service.stop_training(job_id)
         return result
@@ -152,6 +171,8 @@ async def stop_training(job_id: str):
 @app.get("/api/training-jobs")
 async def get_all_training_jobs():
     """Get all training jobs and their status"""
+    if training_service is None:
+        raise HTTPException(status_code=503, detail="Training service not available")
     try:
         jobs_info = training_service.get_all_jobs()
         return jobs_info
@@ -169,6 +190,16 @@ async def get_presets():
 @app.get("/api/health")
 async def health_check():
     return {"status": "healthy"}
+
+
+@app.on_event("startup")
+async def startup_event():
+    """Log startup information"""
+    import sys
+    print(f"Python version: {sys.version}")
+    print(f"Server starting on port: {os.getenv('PORT', '8000')}")
+    print(f"LLM Service initialized: {llm_service is not None}")
+    print(f"Training Service initialized: {training_service is not None}")
 
 
 if __name__ == "__main__":
